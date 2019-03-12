@@ -1,10 +1,10 @@
 package com.tsystems.fixedline;
-public class Kondition {
+class Kondition {
     VertragsLaufZeit vertragsLaufZeit;
     VerlaengerungsFrist verlaengerungsFrist;
-    public String art;
+    String art;
 
-    public Kondition(String art, VertragsLaufZeit vertragsLaufZeit, VerlaengerungsFrist verlaengerungsFrist) {
+    Kondition(String art, VertragsLaufZeit vertragsLaufZeit, VerlaengerungsFrist verlaengerungsFrist) {
         this.art = art;
         this.vertragsLaufZeit = vertragsLaufZeit;
         this.verlaengerungsFrist = verlaengerungsFrist;

@@ -1,9 +1,9 @@
 package com.tsystems.fixedline;
 
-public class Vertrag {
+class Vertrag {
     Veertragsgegenstand veertragsgegenstand;
 
-    public Vertrag(Veertragsgegenstand veertragsgegenstand) {
+    Vertrag(Veertragsgegenstand veertragsgegenstand) {
         this.veertragsgegenstand = veertragsgegenstand;
     }
 }

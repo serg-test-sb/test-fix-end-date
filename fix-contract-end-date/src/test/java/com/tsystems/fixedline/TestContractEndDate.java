@@ -8,9 +8,9 @@ import org.testng.annotations.Test;
 
 public class TestContractEndDate {
 
-    FixedLineContractEndDate fixedLineContractEndDate = new FixedLineContractEndDate();
+    private FixedLineContractEndDate fixedLineContractEndDate = new FixedLineContractEndDate();
 
-    public Vertrag getContract(List<Kondition> konditions, LocalDate startContractDate) {
+    private Vertrag getContract(List<Kondition> konditions, LocalDate startContractDate) {
         return new Vertrag(
                 new Veertragsgegenstand(
                         konditions,
@@ -18,7 +18,7 @@ public class TestContractEndDate {
                 ));
     }
 
-    public List<Kondition> getRelevantContract() {
+    private List<Kondition> getRelevantContract() {
         List<Kondition> konditions = new ArrayList<Kondition>();
 
         Kondition kondition1 = new Kondition("MC44",
@@ -51,7 +51,7 @@ public class TestContractEndDate {
         return konditions;
     }
 
-    public List<Kondition> getNoRelevantContract() {
+    private List<Kondition> getNoRelevantContract() {
         List<Kondition> konditions = new ArrayList<Kondition>();
         Kondition kondition1 = new Kondition("ZK03",
                 new VertragsLaufZeit(1, "MON"),
@@ -69,7 +69,7 @@ public class TestContractEndDate {
     }
 
 
-    public List<Kondition> getNoValidTimePeriodNegative() {
+    private List<Kondition> getNoValidTimePeriodNegative() {
         List<Kondition> konditions = new ArrayList<Kondition>();
         Kondition kondition1 = new Kondition("ZC02",
                 new VertragsLaufZeit(-1, "JHR"),
@@ -79,7 +79,7 @@ public class TestContractEndDate {
         return konditions;
     }
 
-    public List<Kondition> getNoValidTimePeriodZero() {
+    private List<Kondition> getNoValidTimePeriodZero() {
         List<Kondition> konditions = new ArrayList<Kondition>();
         Kondition kondition1 = new Kondition("ZC02",
                 new VertragsLaufZeit(0, "JHR"),
@@ -99,7 +99,7 @@ public class TestContractEndDate {
         return konditions;
     }
 
-    public List<Kondition> getNoValidTypeRenewalPeriod() {
+    private List<Kondition> getNoValidTypeRenewalPeriod() {
         List<Kondition> konditions = new ArrayList<Kondition>();
         Kondition kondition1 = new Kondition("ZC02",
                 new VertragsLaufZeit(1, "MON"),
@@ -134,13 +134,13 @@ public class TestContractEndDate {
         Assert.assertEquals(fixedLineContractEndDate.getKondition(getContract(getRelevantContract(), startConstractDate),currentDate), "15.06.2019", "Check of the start date of the contract equal current date has failed");
     }
     @Test
-    public void checkEqualEndDateDurationTime() throws Exception{
+    public void checkCurrentDateEqualEndDateDurationTime() throws Exception{
         LocalDate currentDate =LocalDate.of(2019, Month.JUNE,15);
         LocalDate startConstractDate = LocalDate.of(2018, Month.JUNE,15);
         Assert.assertEquals(fixedLineContractEndDate.getKondition(getContract(getRelevantContract(), startConstractDate),currentDate), "15.06.2019", "Check of the end date of the contract equal the end date of the contract duration time has failed");
     }
     @Test
-    public void checkEqualEndDateRenewalTime() throws Exception{
+    public void checkCurrentDateEqualEndDateRenewalTime() throws Exception{
         LocalDate currentDate =LocalDate.of(2020, Month.MARCH,15);
         LocalDate startConstractDate = LocalDate.of(2018, Month.JUNE,15);
         Assert.assertEquals(fixedLineContractEndDate.getKondition(getContract(getRelevantContract(), startConstractDate),currentDate), "15.03.2020", "Check of the end date of the contract equal the end date of the contract renewal time has failed");
@@ -169,6 +169,13 @@ public class TestContractEndDate {
         LocalDate currentDate =LocalDate.of(2017, Month.AUGUST,26);
         LocalDate startConstractDate = LocalDate.of(2017, Month.JUNE,15);
         fixedLineContractEndDate.getKondition(getContract(getNoRelevantContract(), startConstractDate),currentDate);
+
+    }
+    @Test(expectedExceptions = Exception.class)
+    public void checkNoValidTypeDurationPeriod() throws Exception{
+        LocalDate currentDate =LocalDate.of(2017, Month.AUGUST,26);
+        LocalDate startConstractDate = LocalDate.of(2017, Month.JUNE,15);
+        fixedLineContractEndDate.getKondition(getContract(getNoValidTypeDurationPeriod(), startConstractDate),currentDate);
 
     }
     @Test(expectedExceptions = Exception.class)

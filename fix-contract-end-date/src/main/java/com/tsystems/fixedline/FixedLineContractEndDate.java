@@ -2,9 +2,9 @@ package com.tsystems.fixedline;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class FixedLineContractEndDate {
+class FixedLineContractEndDate {
 
-    public LocalDate getEndDate(LocalDate beginContractDate, LocalDate currentDate, int contractDurationTime,
+    private LocalDate getEndDate(LocalDate beginContractDate, LocalDate currentDate, int contractDurationTime,
                                 String contractDurationTimeType, int contractRenewalTime, String contractRenewalTimeType)
             throws Exception {
         LocalDate endContractDate;
@@ -57,7 +57,7 @@ public class FixedLineContractEndDate {
 
 
 
-    public String getKondition(Vertrag vertrag, LocalDate currentDate) throws Exception{
+    String getKondition(Vertrag vertrag, LocalDate currentDate) throws Exception{
         for (Kondition i : vertrag.veertragsgegenstand.konditionList) {
             if (i.art.matches("Z.02")) {
                 return getEndDate(vertrag.veertragsgegenstand.istTermin.vertragsBeginnTerminIst,
@@ -66,7 +66,7 @@ public class FixedLineContractEndDate {
                         .format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
             }
         }
-        throw new Exception("There is no art contains '02' in the contract");
+        throw new Exception("There is no art contains 'Zx02' in the contract");
     }
 }
 
